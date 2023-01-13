@@ -14,7 +14,7 @@ setup (
     description = 'Package to create, edit, check for repeats, merge, and so on with bib files',
     author = 'Divyajyoti',
     author_email = 'divyajyoti.physics@gmail.com',
-    download_url = '',
+    download_url = 'https://github.com/divyajyoti09/quick_bib',
     keywords = ['tex', 'bib files'],
     install_requires = ['bibtexparser'],
     py_modules = ['quick_bib'],
