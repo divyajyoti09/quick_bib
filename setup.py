@@ -6,7 +6,7 @@ setup.py file for EccInspHMuSPA and EccInsp22uSPA pycbc waveform plugin package
 from setuptools import Extension, setup, Command
 from setuptools import find_packages
 
-VERSION = '0.0.dev0'
+VERSION = '1.0.dev0'
 
 setup (
     name = 'quick_bib',
