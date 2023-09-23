@@ -1,5 +1,10 @@
-Installation instructions:
+This is a 
 
-`pip install bibtexparser`
+## Installation instructions:
 
-`python setup.py install`
+```
+pip install bibtexparser
+git clone
+cd quick_bib
+python setup.py install
+```
