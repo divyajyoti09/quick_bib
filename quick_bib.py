@@ -459,14 +459,18 @@ def remove_repeats_from_file_to_new(new_file, old_file):
     """
     Merges all the repeated entries in the old_file and writes into new_file.
     Old file is left untouched.
-    If no repeated entries are found, new file is not created.
+    If no repeated entries are found, the new file will have the exact same entries as the old one but in alphabetical order.
+    Caution: If two entries have the same key, the function does not distinguish between them. These are loaded as a single entry into the bib database and hence not counted as repeated. The new file will only have one of the two.
     """
     with open(old_file) as f:
         db_old = bp.load(f)
         f.close()
         
     if check_repeats_in_db(db_old)==False:
-        print('No repeated entries found. Exiting the process. New file will not be created.')
+        print('No repeated entries found. The old file will have the same entries (in alphabetical order) as new except repeated keys which have only been counted once (see docstring for details).')
+        with open(new_file, 'w') as f:
+            f.write(bw.write(db_old))
+            f.close()
         return
     else:
         db_new = merge_duplicates_in_db(db_old)
