@@ -186,7 +186,9 @@ def no_arxiv_IDs(bib_database):
 
 def get_doi(bib_entry):
     if 'doi' in bib_entry.keys():
-        if 'https' in bib_entry['doi']:
+        if 'https://doi.org/' in bib_entry['doi']:
+            doi = bib_entry['doi'].split('https://doi.org/')[-1]
+        elif 'https' in bib_entry['doi']:
             doi = bib_entry['doi'].split('https://')[-1]
         else:
             doi = bib_entry['doi']
@@ -253,10 +255,13 @@ def repeats_in_two_dbs(bib_database1, bib_database2):
 
     Returns:
     ------------
-    Repeated IDs (if found) as dictionary in the format:
-    {repeated_val1:[db1_key, db2_key], repeated_val2: [db1_key, db2_key]}
+    (repeated_doi, repeated_arxiv)
+
+    repeated_doi is dictionary containing entries with repeated doi in the format:
+    {repeated_val1:[db1_key, db2_key], repeated_val2: [db1_key, db2_key], ...}
     where db1_key corresponds to key for the repeated value in database1 and so on.
-    repeated_val can be a DOI or arxiv ID of the repeated bib_entry
+    
+    repeated_arxiv is a dictionary containing entries with repeated arxiv ID in the same format as above.
     """
     arxiv_IDs1 = get_arxiv_IDs(bib_database1)
     arxiv_IDs2 = get_arxiv_IDs(bib_database2)
@@ -424,9 +429,9 @@ def merge_two_databases(bib_database1, bib_database2):
             final_db.entries.append(bdb2.entries_dict[key2])
         else:
             if in_nested_list(repeated_doi.values(), key2)==True:
-                key1 = repeated_doi[bdb2.entries_dict[key2]['doi']][0]
+                key1 = repeated_doi[get_doi(bdb2.entries_dict[key2])][0]
             elif in_nested_list(repeated_arxiv.values(), key2)==True:
-                key1 = repeated_arxiv[bdb2.entries_dict[key2]['eprint']][0]
+                key1 = repeated_arxiv[get_arxiv_ID(bdb2.entries_dict[key2])][0]
                 
             merged_bib_entry = merge_bib_entries(final_db.entries_dict[key1], bdb2.entries_dict[key2])
             final_db.entries_dict[key1].update(merged_bib_entry)
