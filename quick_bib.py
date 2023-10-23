@@ -101,6 +101,8 @@ def is_inspire_HEP_key(my_string):
     last = rest[4:]
     if first.isalpha() and year.isnumeric() and last.isalpha():
         return(True)
+    if ':' in last:
+        return(False)
     else:
         return(False)
 
