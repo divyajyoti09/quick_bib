@@ -99,9 +99,12 @@ def is_inspire_HEP_key(my_string):
     rest = ''.join(my_string.split(':')[1:])
     year = rest[:4]
     last = rest[4:]
+    hyphenated_name_remove_hyphen = ''.join(first.split('-'))
     if first.isalpha() and year.isnumeric() and last.isalpha():
         return(True)
-    if ':' in last:
+    elif hyphenated_name_remove_hyphen.isalpha() and year.isnumeric() and last.isalpha():
+        return(True)
+    elif len(my_string.split(':'))>2:
         return(False)
     else:
         return(False)
