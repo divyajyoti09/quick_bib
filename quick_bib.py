@@ -255,7 +255,9 @@ def repeats_in_two_dbs(bib_database1, bib_database2):
 
     Returns:
     ------------
-    (repeated_doi, repeated_arxiv)
+    (repeated_keys, repeated_doi, repeated_arxiv)
+
+    repeated_keys is a list containing keys which are repeated between the two databases
 
     repeated_doi is dictionary containing entries with repeated doi in the format:
     {repeated_val1:[db1_key, db2_key], repeated_val2: [db1_key, db2_key], ...}
@@ -263,11 +265,21 @@ def repeats_in_two_dbs(bib_database1, bib_database2):
     
     repeated_arxiv is a dictionary containing entries with repeated arxiv ID in the same format as above.
     """
+
+    keys1 = bib_database1.entries_dict.keys()
+    keys2 = bib_database2.entries_dict.keys()
+
     arxiv_IDs1 = get_arxiv_IDs(bib_database1)
     arxiv_IDs2 = get_arxiv_IDs(bib_database2)
 
     dois1 = get_dois(bib_database1)
     dois2 = get_dois(bib_database2)
+
+    repeated_keys = []
+
+    for key in keys1:
+        if key in keys2:
+            repeated_keys.append(key)
 
     if len(arxiv_IDs1.values())!=len(set(arxiv_IDs1.values())) or len(dois1.values())!=len(set(dois1.values())):
         print('Database1 has repeated entries. Please eliminate all repeated entries then proceed.')
@@ -292,7 +304,7 @@ def repeats_in_two_dbs(bib_database1, bib_database2):
     if len(repeated_doi)==0:
         print('No duplicate DOIs found.')
 
-    return(repeated_doi, repeated_arxiv)
+    return(repeated_keys, repeated_doi, repeated_arxiv)
 
 
 # In[204]:
@@ -413,7 +425,7 @@ def merge_two_databases(bib_database1, bib_database2):
     print('\n')
 
     print('Checking for repeats between databases...')
-    repeated_doi, repeated_arxiv = repeats_in_two_dbs(bdb1, bdb2)
+    repeated_keys, repeated_doi, repeated_arxiv = repeats_in_two_dbs(bdb1, bdb2)
 
     combined_repeats = repeated_doi.copy()
     combined_repeats.update(repeated_arxiv)
@@ -425,10 +437,12 @@ def merge_two_databases(bib_database1, bib_database2):
         final_db.entries.append(bdb1.entries_dict[key1])
 
     for key2 in bdb2.entries_dict.keys():
-        if in_nested_list(combined_repeats.values(), key2)==False:
+        if in_nested_list(combined_repeats.values(), key2)==False and key2 not in repeated_keys:
             final_db.entries.append(bdb2.entries_dict[key2])
         else:
-            if in_nested_list(repeated_doi.values(), key2)==True:
+            if key2 in repeated_keys:
+                key1 = key2
+            elif in_nested_list(repeated_doi.values(), key2)==True:
                 key1 = repeated_doi[get_doi(bdb2.entries_dict[key2])][0]
             elif in_nested_list(repeated_arxiv.values(), key2)==True:
                 key1 = repeated_arxiv[get_arxiv_ID(bdb2.entries_dict[key2])][0]
