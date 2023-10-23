@@ -6,5 +6,7 @@ This is a bibliography package to assist in managing bib files and bib entries. 
 pip install bibtexparser
 git clone git@github.com:divyajyoti09/quick_bib.git  # or clone with https link https://github.com/divyajyoti09/quick_bib.git
 cd quick_bib
-python setup.py install
+pip install .
+
+#python setup.py install # this has been deprecated in some versions of setuptools
 ```
