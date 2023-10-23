@@ -433,6 +433,14 @@ def merge_two_databases(bib_database1, bib_database2):
 
 # In[210]:
 
+def get_bib_database_from_file(file):
+    """
+    Returns bib_database from a bib file. This can then be used for various other functions.
+    """
+    with open(file) as f:
+        db = bp.load(f)
+        f.close()
+    return(db)
 
 def remove_repeats_from_file(file):
     """
