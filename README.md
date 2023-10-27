@@ -18,7 +18,7 @@ pip install .
 - Merge two bib files into one (merges the repeated entries between the two files).
 - For those who like to cite only from InspireHEP (but their collaborators might not), `quick_bib` can be used to identify entries in a .bib which are not in InspireHEP format.
 
-## Planned upgrade:
+## Planned upgrades:
 
 I'm always looking forward to suggestions. Please create issues for suggestions and any bugs that you encounter in the package. Here are some upgrades that I'm planning to implement in the future:
 - Convert some of the functions to CLI functions.
