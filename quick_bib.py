@@ -328,7 +328,7 @@ def merge_bib_entries(entry1, entry2):
     """
     Merges entry2 into entry1 by adding any missing fields in entry1. 
     If one or both of the entries have 'ID' in the inspire HEP format, 
-    the inspire HEP ID will be used for final entry. Else, the ID of 
+    the inspire HEP ID will be used for final entry. Else, the ID of entry2 will be used. 
     Warning: It replaces the old values of entry1 with the corresponding values of entry2.
 
     Returns:
@@ -348,17 +348,27 @@ def merge_bib_entries(entry1, entry2):
     else:
         final_entry = entry1.copy()
         final_entry.update(entry2)
+
+        #checking a special case of LIGOScientific inspireHEP entries for which the keys have been updated in the past few years.
+        
         if is_inspire_HEP_key(final_entry['ID']):
+            if 'LIGOScientific' in final_entry['ID']:
+                if 'KAGRA' in entry1['ID']:
+                    final_entry['ID'] = entry1['ID']
+                elif 'KAGRA' in entry2['ID']:
+                    final_entry['ID'] = entry2['ID']
+            elif 'Abbott' in final_entry['ID']:
+                if 'LIGOScientific' in entry1['ID'] or 'KAGRA' in entry1['ID']:
+                    final_entry['ID'] = entry1['ID']
+                if 'LIGOScientific' in entry2['ID'] or 'KAGRA' in entry2['ID']:
+                    final_entry['ID'] = entry2['ID']
             return(final_entry)
         else:
             if is_inspire_HEP_key(entry1['ID']):
                 final_entry['ID'] = entry1['ID']
-                return(final_entry)
             elif is_inspire_HEP_key(entry2['ID']):
                 final_entry['ID'] = entry2['ID']
-                return(final_entry)
-            else:
-                return(final_entry)
+            return(final_entry)
 
 
 # In[206]:
