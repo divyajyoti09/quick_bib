@@ -2,6 +2,12 @@ This is a bibliography package to assist in managing bib files and bib entries. 
 
 ## Installation instructions:
 
+### create a new conda env
+```
+conda create --name myenv python=3.10
+```
+
+### Clone and install the package
 ```
 pip install bibtexparser
 git clone https://github.com/divyajyoti09/quick_bib.git # or clone with ssh link git@github.com:divyajyoti09/quick_bib.git
@@ -9,6 +15,13 @@ cd quick_bib
 pip install .
 
 #python setup.py install # this has been deprecated in some versions of setuptools
+```
+
+### Add the env to jupyter-notebook
+```
+# Using it for jupyter-notebook
+pip install ipykernel
+python -m ipykernel install --user --name myenv
 ```
 
 ## Top features:
