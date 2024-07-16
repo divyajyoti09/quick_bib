@@ -2,9 +2,10 @@ This is a bibliography package to assist in managing bib files and bib entries. 
 
 ## Installation instructions:
 
-### create a new conda env
+### Create a new conda env
 ```
 conda create --name myenv python=3.10
+conda activate myenv
 ```
 
 ### Clone and install the package
