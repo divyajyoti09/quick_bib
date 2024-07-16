@@ -314,8 +314,8 @@ def check_repeats_in_two_dbs(bib_database1, bib_database2):
     """
     Returns True if there are entries with duplicate DOIs or arxiv_IDs between the two databases else returns False.
     """
-    rd, ra = repeats_in_two_dbs(bib_database1, bib_database2)
-    if len(rd)==0 and len(ra)==0:
+    rk, rd, ra = repeats_in_two_dbs(bib_database1, bib_database2)
+    if len(rk)==0 and len(rd)==0 and len(ra)==0:
         return(False)
     else:
         return(True)
