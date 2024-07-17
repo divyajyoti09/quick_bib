@@ -41,7 +41,7 @@ def flip_dict(my_dict):
     Returns flipped dictionary with values as keys and vice versa
     
     Eg.
-    If my_dcit = {'key1':'val1', 'key2':'val2', 'key3':'val2'}
+    If my_dict = {'key1':'val1', 'key2':'val2', 'key3':'val2'}
     then returns: {'val1':['key1'], 'val2':['key2', 'key3']}
     """
     flipped = {}
