@@ -342,9 +342,11 @@ def merge_bib_entries(entry1, entry2):
     d2 = get_doi(entry2)
 
     if a1!=a2 and d1!=d2:
-        print('Both entries have different DOI or arxiv IDs. Cannot confirm that they are the same entry. Please merge them manually.')
         print('Entry1 :', entry1)
         print('Entry2 :', entry2)
+        raise NameError('Both entries have different DOI or arxiv IDs. \
+        Cannot confirm that they are the same entry. \
+        Please merge them manually.')
         return
 
     else:
